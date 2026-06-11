@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f1117; display: flex; justify-content: center; align-items: flex-start; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<svg width="1600" height="1020" viewBox="0 0 1600 1020" xmlns="http://www.w3.org/2000/svg" style="font-family:Arial,sans-serif">
+
+  <!-- ── Background ── -->
+  <rect width="1600" height="1020" fill="#0f1117"/>
+
+  <!-- ── Title ── -->
+  <text x="800" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="#e2e8f0">Power Outage Management System — Multi-Agent Architecture</text>
+  <text x="800" y="58" text-anchor="middle" font-size="12" fill="#64748b">FastAPI Backend · Streamlit UIs · Three-Tier Agent Pipeline · MessageBus Communication</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       LAYER LABELS (right side)
+  ══════════════════════════════════════════════════════════════════ -->
+  <text x="1580" y="120" text-anchor="end" font-size="11" fill="#475569" font-style="italic">Frontend Layer</text>
+  <text x="1580" y="230" text-anchor="end" font-size="11" fill="#475569" font-style="italic">API Layer</text>
+  <text x="1580" y="345" text-anchor="end" font-size="11" fill="#475569" font-style="italic">Agent Tier 1</text>
+  <text x="1580" y="480" text-anchor="end" font-size="11" fill="#475569" font-style="italic">Agent Tier 2</text>
+  <text x="1580" y="640" text-anchor="end" font-size="11" fill="#475569" font-style="italic">Agent Tier 3</text>
+  <text x="1580" y="820" text-anchor="end" font-size="11" fill="#475569" font-style="italic">Data Layer</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       MESSAGE BUS — vertical amber band (left side)
+  ══════════════════════════════════════════════════════════════════ -->
+  <rect x="30" y="75" width="70" height="760" rx="8" fill="#78350f" stroke="#f59e0b" stroke-width="1.5" opacity="0.85"/>
+  <text x="65" y="265" text-anchor="middle" font-size="13" font-weight="bold" fill="#fcd34d" transform="rotate(-90,65,265)">📡  M E S S A G E   B U S  (Publish / Subscribe)</text>
+  <!-- Bus label -->
+  <text x="65" y="845" text-anchor="middle" font-size="10" fill="#f59e0b">All agents</text>
+  <text x="65" y="858" text-anchor="middle" font-size="10" fill="#f59e0b">publish here</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       FRONTEND LAYER
+  ══════════════════════════════════════════════════════════════════ -->
+  <!-- Customer Portal -->
+  <rect x="160" y="80" width="360" height="80" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="340" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#93c5fd">👤 Customer Portal</text>
+  <text x="340" y="126" text-anchor="middle" font-size="11" fill="#64748b">Streamlit · port 8501</text>
+  <text x="340" y="145" text-anchor="middle" font-size="10" fill="#475569">Submit complaints · View responses</text>
+
+  <!-- Management Dashboard -->
+  <rect x="880" y="80" width="360" height="80" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="1060" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#93c5fd">🔧 Management Dashboard</text>
+  <text x="1060" y="126" text-anchor="middle" font-size="11" fill="#64748b">Streamlit · port 8502</text>
+  <text x="1060" y="145" text-anchor="middle" font-size="10" fill="#475569">Agent monitor · Grid stress · Goals · Bus messages</text>
+
+  <!-- Frontend connector line (decorative) -->
+  <line x1="520" y1="120" x2="880" y2="120" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       API LAYER
+  ══════════════════════════════════════════════════════════════════ -->
+  <!-- FastAPI Backend -->
+  <rect x="430" y="230" width="540" height="85" rx="10" fill="#1e2035" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="700" y="258" text-anchor="middle" font-size="15" font-weight="bold" fill="#a5b4fc">⚡ FastAPI Backend</text>
+  <text x="700" y="276" text-anchor="middle" font-size="11" fill="#64748b">port 8000 · Single shared agent runtime</text>
+  <text x="700" y="296" text-anchor="middle" font-size="10" fill="#475569">POST /complaints · GET /complaints · GET /messages · GET /status · GET /activity-log · POST /demo</text>
+
+  <!-- Background Drain Thread -->
+  <rect x="990" y="238" width="200" height="68" rx="8" fill="#1a1a2e" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="1090" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#c4b5fd">🔄 Drain Thread</text>
+  <text x="1090" y="278" text-anchor="middle" font-size="10" fill="#64748b">Background · 0.5s loop</text>
+  <text x="1090" y="294" text-anchor="middle" font-size="10" fill="#475569">Formats customer messages</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       AGENT TIER 1 — CustomerSupportAgent
+  ══════════════════════════════════════════════════════════════════ -->
+  <rect x="430" y="385" width="540" height="85" rx="10" fill="#0f2d40" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="700" y="413" text-anchor="middle" font-size="15" font-weight="bold" fill="#67e8f9">👤 CustomerSupportAgent</text>
+  <text x="700" y="432" text-anchor="middle" font-size="11" fill="#64748b">GOAL: Acknowledge every complaint within 5 s</text>
+  <text x="700" y="450" text-anchor="middle" font-size="10" fill="#475569">intake() · create_complaint() · format_response() via GPT</text>
+  <rect x="440" y="460" width="120" height="5" rx="2" fill="#06b6d4" opacity="0.3"/>
+  <text x="500" y="467" text-anchor="middle" font-size="9" fill="#67e8f9">ack_rate tracked</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       AGENT TIER 2 — CoordinatorAgent
+  ══════════════════════════════════════════════════════════════════ -->
+  <rect x="210" y="535" width="980" height="100" rx="10" fill="#1e1a35" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="700" y="562" text-anchor="middle" font-size="15" font-weight="bold" fill="#c4b5fd">🔀 CoordinatorAgent</text>
+  <text x="700" y="580" text-anchor="middle" font-size="11" fill="#64748b">GOAL: 100% routing accuracy · avg resolution &lt; 60 s</text>
+
+  <!-- Priority Queue badge -->
+  <rect x="270" y="588" width="150" height="36" rx="6" fill="#2d1b69" stroke="#7c3aed" stroke-width="1"/>
+  <text x="345" y="602" text-anchor="middle" font-size="10" font-weight="bold" fill="#c4b5fd">📊 Priority Queue</text>
+  <text x="345" y="617" text-anchor="middle" font-size="9" fill="#8b5cf6">2 worker threads</text>
+
+  <!-- Butterfly badge -->
+  <rect x="440" y="588" width="160" height="36" rx="6" fill="#0f2535" stroke="#06b6d4" stroke-width="1"/>
+  <text x="520" y="602" text-anchor="middle" font-size="10" font-weight="bold" fill="#67e8f9">🦋 Butterfly Effect</text>
+  <text x="520" y="617" text-anchor="middle" font-size="9" fill="#22d3ee">Stress propagation</text>
+
+  <!-- Emergence badge -->
+  <rect x="620" y="588" width="160" height="36" rx="6" fill="#350a2a" stroke="#d946ef" stroke-width="1"/>
+  <text x="700" y="602" text-anchor="middle" font-size="10" font-weight="bold" fill="#f0abfc">🚨 Grid Crisis</text>
+  <text x="700" y="617" text-anchor="middle" font-size="9" fill="#e879f9">Emergent property ≥3 faults</text>
+
+  <!-- Negotiation badge -->
+  <rect x="800" y="588" width="160" height="36" rx="6" fill="#2a2010" stroke="#f59e0b" stroke-width="1"/>
+  <text x="880" y="602" text-anchor="middle" font-size="10" font-weight="bold" fill="#fcd34d">🤝 Negotiation</text>
+  <text x="880" y="617" text-anchor="middle" font-size="9" fill="#fbbf24">3-stage crew bargaining</text>
+
+  <!-- Uncertainty badge -->
+  <rect x="980" y="588" width="160" height="36" rx="6" fill="#1a1500" stroke="#ca8a04" stroke-width="1"/>
+  <text x="1060" y="602" text-anchor="middle" font-size="10" font-weight="bold" fill="#fde047">⚡ Uncertainty</text>
+  <text x="1060" y="617" text-anchor="middle" font-size="9" fill="#eab308">Confidence flagging &lt;65%</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       AGENT TIER 3 — TechnicalFaultAgents
+  ══════════════════════════════════════════════════════════════════ -->
+  <!-- Colombo-07 -->
+  <rect x="115" y="700" width="185" height="90" rx="9" fill="#12151f" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="208" y="722" text-anchor="middle" font-size="12" font-weight="bold" fill="#fca5a5">TechAgent</text>
+  <text x="208" y="738" text-anchor="middle" font-size="11" fill="#ef4444">Colombo-07</text>
+  <text x="208" y="754" text-anchor="middle" font-size="9" fill="#64748b">⚡ Line Tripped</text>
+  <text x="208" y="768" text-anchor="middle" font-size="9" fill="#64748b">HIGH · crew: 3</text>
+  <text x="208" y="782" text-anchor="middle" font-size="9" fill="#475569">ETA 45 min</text>
+
+  <!-- Negombo -->
+  <rect x="320" y="700" width="185" height="90" rx="9" fill="#12151f" stroke="#f97316" stroke-width="1.5"/>
+  <text x="413" y="722" text-anchor="middle" font-size="12" font-weight="bold" fill="#fdba74">TechAgent</text>
+  <text x="413" y="738" text-anchor="middle" font-size="11" fill="#f97316">Negombo</text>
+  <text x="413" y="754" text-anchor="middle" font-size="9" fill="#64748b">🔴 Transformer OL</text>
+  <text x="413" y="768" text-anchor="middle" font-size="9" fill="#64748b">HIGH · crew: 2</text>
+  <text x="413" y="782" text-anchor="middle" font-size="9" fill="#475569">ETA 90 min</text>
+
+  <!-- Kandy -->
+  <rect x="525" y="700" width="185" height="90" rx="9" fill="#12151f" stroke="#10b981" stroke-width="1.5"/>
+  <text x="618" y="722" text-anchor="middle" font-size="12" font-weight="bold" fill="#6ee7b7">TechAgent</text>
+  <text x="618" y="738" text-anchor="middle" font-size="11" fill="#10b981">Kandy</text>
+  <text x="618" y="754" text-anchor="middle" font-size="9" fill="#64748b">✅ No Fault</text>
+  <text x="618" y="768" text-anchor="middle" font-size="9" fill="#64748b">NONE · crew: 2</text>
+  <text x="618" y="782" text-anchor="middle" font-size="9" fill="#475569">All feeders normal</text>
+
+  <!-- Galle -->
+  <rect x="730" y="700" width="185" height="90" rx="9" fill="#12151f" stroke="#ef4444" stroke-width="2"/>
+  <text x="823" y="722" text-anchor="middle" font-size="12" font-weight="bold" fill="#fca5a5">TechAgent</text>
+  <text x="823" y="738" text-anchor="middle" font-size="11" fill="#ef4444">Galle</text>
+  <text x="823" y="754" text-anchor="middle" font-size="9" fill="#64748b">🔧 Cable Break</text>
+  <text x="823" y="768" text-anchor="middle" font-size="9" fill="#ef4444">CRITICAL · crew: 2</text>
+  <text x="823" y="782" text-anchor="middle" font-size="9" fill="#475569">ETA 180 min</text>
+
+  <!-- Matara -->
+  <rect x="935" y="700" width="185" height="90" rx="9" fill="#12151f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="1028" y="722" text-anchor="middle" font-size="12" font-weight="bold" fill="#93c5fd">TechAgent</text>
+  <text x="1028" y="738" text-anchor="middle" font-size="11" fill="#3b82f6">Matara</text>
+  <text x="1028" y="754" text-anchor="middle" font-size="9" fill="#64748b">🔵 Scheduled Maint.</text>
+  <text x="1028" y="768" text-anchor="middle" font-size="9" fill="#64748b">MEDIUM · crew: 1</text>
+  <text x="1028" y="782" text-anchor="middle" font-size="9" fill="#475569">ETA 120 min</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       OPENAI (External)
+  ══════════════════════════════════════════════════════════════════ -->
+  <rect x="1200" y="500" width="200" height="80" rx="10" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="1300" y="528" text-anchor="middle" font-size="13" font-weight="bold" fill="#6ee7b7">🤖 OpenAI</text>
+  <text x="1300" y="546" text-anchor="middle" font-size="11" fill="#34d399">GPT-4o-mini</text>
+  <text x="1300" y="562" text-anchor="middle" font-size="10" fill="#064e3b" fill="white" opacity="0.6">Fault diagnosis</text>
+  <text x="1300" y="572" text-anchor="middle" font-size="10" fill="#10b981">Customer responses</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       DATA LAYER
+  ══════════════════════════════════════════════════════════════════ -->
+  <rect x="340" y="845" width="720" height="70" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+  <text x="700" y="870" text-anchor="middle" font-size="13" font-weight="bold" fill="#94a3b8">📦 data.py</text>
+  <text x="700" y="888" text-anchor="middle" font-size="11" fill="#64748b">AREAS · AREA_ADJACENCY · CREW_CAPACITY · FAULT_TYPE_INFO · FAULT_UNCERTAINTY · STATUS_CONFIG</text>
+  <text x="700" y="904" text-anchor="middle" font-size="10" fill="#475569">Static grid knowledge shared across all agents</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ARROWS
+  ══════════════════════════════════════════════════════════════════ -->
+
+  <!-- Customer Portal → FastAPI (HTTP POST) -->
+  <line x1="340" y1="160" x2="590" y2="230" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="430" y="202" font-size="10" fill="#3b82f6">HTTP POST /complaints</text>
+
+  <!-- Mgmt Dashboard → FastAPI (HTTP GET) -->
+  <line x1="1060" y1="160" x2="870" y2="230" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="920" y="202" font-size="10" fill="#3b82f6">HTTP GET (polling)</text>
+
+  <!-- FastAPI → CustomerSupportAgent -->
+  <line x1="700" y1="315" x2="700" y2="385" stroke="#6366f1" stroke-width="1.8" marker-end="url(#arrowPurple)"/>
+  <text x="715" y="355" font-size="10" fill="#6366f1">intake()</text>
+
+  <!-- FastAPI ↔ Drain Thread -->
+  <line x1="970" y1="272" x2="990" y2="272" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrowViolet)"/>
+
+  <!-- CustomerSupportAgent → CoordinatorAgent -->
+  <line x1="700" y1="470" x2="700" y2="535" stroke="#06b6d4" stroke-width="1.8" marker-end="url(#arrowCyan)"/>
+  <text x="715" y="508" font-size="10" fill="#06b6d4">route()</text>
+
+  <!-- Drain Thread → CustomerSupportAgent (format_response) -->
+  <path d="M 1090 238 Q 1090 200 1090 180 Q 1090 155 980 155 Q 900 155 870 155 Q 800 155 800 200 Q 800 427 830 427" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#arrowViolet)"/>
+  <text x="1095" y="195" font-size="9" fill="#7c3aed">format_response()</text>
+
+  <!-- CoordinatorAgent → TechAgents (fan out) -->
+  <line x1="480" y1="635" x2="280" y2="700" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <line x1="550" y1="635" x2="450" y2="700" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <line x1="700" y1="635" x2="655" y2="700" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <line x1="850" y1="635" x2="870" y2="700" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <line x1="920" y1="635" x2="1000" y2="700" stroke="#10b981" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <text x="640" y="672" font-size="10" fill="#10b981">diagnose()</text>
+
+  <!-- TechAgents → OpenAI -->
+  <path d="M 1120 745 Q 1160 745 1200 580" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="1140" y="700" font-size="9" fill="#10b981">GPT diagnosis</text>
+
+  <!-- CustomerSupportAgent → OpenAI -->
+  <line x1="970" y1="427" x2="1200" y2="530" stroke="#10b981" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#arrowGreen)"/>
+  <text x="1060" y="460" font-size="9" fill="#10b981">GPT response</text>
+
+  <!-- MessageBus ↔ Tier1 -->
+  <line x1="100" y1="427" x2="430" y2="427" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrowAmber)" marker-start="url(#arrowAmberStart)"/>
+
+  <!-- MessageBus ↔ Tier2 -->
+  <line x1="100" y1="585" x2="210" y2="585" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrowAmber)" marker-start="url(#arrowAmberStart)"/>
+
+  <!-- MessageBus ↔ Tier3 (to first agent) -->
+  <line x1="100" y1="745" x2="115" y2="745" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrowAmber)"/>
+
+  <!-- data.py → CoordinatorAgent -->
+  <line x1="600" y1="845" x2="540" y2="635" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrowSlate)"/>
+
+  <!-- data.py → TechAgents -->
+  <line x1="700" y1="845" x2="700" y2="790" stroke="#475569" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrowSlate)"/>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       AREA ADJACENCY ANNOTATION (butterfly effect visual)
+  ══════════════════════════════════════════════════════════════════ -->
+  <!-- Colombo-07 ↔ Negombo adjacency arc -->
+  <path d="M 265 795 Q 340 830 360 795" stroke="#67e8f9" stroke-width="1" stroke-dasharray="3,2" fill="none"/>
+  <!-- Colombo-07 ↔ Kandy -->
+  <path d="M 265 800 Q 440 850 525 800" stroke="#67e8f9" stroke-width="1" stroke-dasharray="3,2" fill="none"/>
+  <!-- Kandy ↔ Matara -->
+  <path d="M 670 800 Q 840 855 935 800" stroke="#67e8f9" stroke-width="1" stroke-dasharray="3,2" fill="none"/>
+  <!-- Galle ↔ Matara -->
+  <path d="M 870 800 Q 900 830 935 800" stroke="#67e8f9" stroke-width="1" stroke-dasharray="3,2" fill="none"/>
+  <text x="560" y="840" text-anchor="middle" font-size="9" fill="#67e8f9">🦋 AREA_ADJACENCY — butterfly stress propagation paths</text>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       LEGEND
+  ══════════════════════════════════════════════════════════════════ -->
+  <rect x="115" y="935" width="1370" height="70" rx="8" fill="#12151f" stroke="#1e2535" stroke-width="1"/>
+  <text x="800" y="955" text-anchor="middle" font-size="11" font-weight="bold" fill="#64748b">LEGEND</text>
+
+  <rect x="135" y="964" width="14" height="14" rx="3" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1"/>
+  <text x="155" y="975" font-size="10" fill="#94a3b8">Frontend (Streamlit)</text>
+
+  <rect x="290" y="964" width="14" height="14" rx="3" fill="#1e2035" stroke="#6366f1" stroke-width="1"/>
+  <text x="310" y="975" font-size="10" fill="#94a3b8">API Backend (FastAPI)</text>
+
+  <rect x="455" y="964" width="14" height="14" rx="3" fill="#0f2d40" stroke="#06b6d4" stroke-width="1"/>
+  <text x="475" y="975" font-size="10" fill="#94a3b8">CustomerSupportAgent</text>
+
+  <rect x="630" y="964" width="14" height="14" rx="3" fill="#1e1a35" stroke="#7c3aed" stroke-width="1"/>
+  <text x="650" y="975" font-size="10" fill="#94a3b8">CoordinatorAgent</text>
+
+  <rect x="790" y="964" width="14" height="14" rx="3" fill="#12151f" stroke="#10b981" stroke-width="1"/>
+  <text x="810" y="975" font-size="10" fill="#94a3b8">TechnicalFaultAgents (×5)</text>
+
+  <rect x="990" y="964" width="14" height="14" rx="3" fill="#064e3b" stroke="#10b981" stroke-width="1"/>
+  <text x="1010" y="975" font-size="10" fill="#94a3b8">OpenAI GPT-4o-mini</text>
+
+  <rect x="1135" y="964" width="14" height="14" rx="3" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="1155" y="975" font-size="10" fill="#94a3b8">data.py (Grid Knowledge)</text>
+
+  <!-- Second legend row -->
+  <line x1="135" y1="993" x2="165" y2="993" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,2"/>
+  <text x="172" y="997" font-size="10" fill="#94a3b8">MessageBus (pub/sub)</text>
+
+  <line x1="305" y1="993" x2="335" y2="993" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="342" y="997" font-size="10" fill="#94a3b8">HTTP Request</text>
+
+  <line x1="440" y1="993" x2="470" y2="993" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="477" y="997" font-size="10" fill="#94a3b8">GPT API Call</text>
+
+  <line x1="570" y1="993" x2="600" y2="993" stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="607" y="997" font-size="10" fill="#94a3b8">Data Import</text>
+
+  <line x1="690" y1="993" x2="720" y2="993" stroke="#67e8f9" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="727" y="997" font-size="10" fill="#94a3b8">Butterfly adjacency links</text>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ARROW MARKERS
+  ══════════════════════════════════════════════════════════════════ -->
+  <defs>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#6366f1"/>
+    </marker>
+    <marker id="arrowViolet" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrowCyan" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#06b6d4"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowAmberStart" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowSlate" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+</svg>
+</body>
+</html>
